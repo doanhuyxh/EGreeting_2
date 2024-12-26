@@ -1,0 +1,173 @@
+﻿@model List<EGreeting.Models.OrdersPackage>
+
+@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    string version = VersionUpdate.Version();
+
+    var count = 1;
+}
+<div id="vue_recharge">
+    <h3>Package purchase list</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="table_order">
+            <thead>
+                <tr>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                       User Name
+                    </th>
+                    <th>
+                        Package code
+                    </th>
+                    <th>
+
+                        Expiry date
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @(count++)
+                        </td>
+                        <td>
+                            @item.User.UserName
+                        </td>
+                       
+                        <td>
+                            @item.Package.Duration
+                        </td>
+                        <td>
+                            @item.CreateDate.ToString("dd/MM/yyyy") -> @item.EndDate.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @if (item.Status)
+                            {
+                                <span class="text-success">
+                                    Activated
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">
+                                    Not activated yet
+                                </span>
+
+
+                            }
+                        </td>
+                        <td style="width: fit-content">
+                            <button type="button" class="btn btn-danger remove-item" data-id="@item.IDOrderPackage">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#table_order').DataTable({
+            'columnDefs': [{
+                'targets': [-1],
+                'orderable': false,
+            }],
+            searching: true,
+            iDisplayLength: 7,
+            "ordering": false,
+            lengthChange: false,
+            aaSorting: [[0, "desc"]],
+           
+        });
+        $(".remove-item").on("click", function () {
+            const orderID = $(this).data("id");
+
+            try {
+                Swal.fire({
+                    title: 'Delete package purchase order',
+                    text: 'Are you sure you want to delete',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No!!!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#preloader').fadeIn();
+
+                        const formData = new FormData();
+                        formData.append('id', orderID);
+
+                        axios.post('/admin/remove-order-user', formData, {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                        }).then(response => {
+                            if (response.data.code == 200) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'success',
+                                    text: 'Deleted successfully',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.reload();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: `${response.data.message}`,
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        return;
+
+                                    }
+                                });
+                            }
+
+                        }).catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'An error occurred, please try again',
+                                confirmButtonText: 'OK'
+                            });
+                        }).finally(() => {
+                            $('#preloader').fadeOut();
+                        });
+                    } else {
+                        return;
+                    }
+                });
+
+            }
+            catch (error) {
+                $('#preloader').fadeOut();
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred, please try again',
+                    confirmButtonText: 'OK'
+                });
+                return;
+
+            }
+            
+
+        });
+    });
+</script>

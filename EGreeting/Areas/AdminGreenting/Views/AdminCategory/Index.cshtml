@@ -1,0 +1,198 @@
+﻿@model List<EGreeting.Models.CategoriesCard>
+@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    string version = VersionUpdate.Version();
+
+    var count = 1;
+}
+<div id="vue_category">
+    <h3>Category List</h3>
+
+    <button type="button" class="btn btn-success p-2" data-bs-toggle="modal" data-bs-target="#addModal" v-on:click="resetData">
+        Add New
+    </button>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="table_category">
+            <thead>
+                <tr>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                        Category Name
+                    </th>
+                    <th>
+                        Status type
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @(count++)
+                        </td>
+                        <td>
+                            @item.NameCategory
+                        </td>
+                        <td>
+                            Default: @item.IsDefault <br />
+                            Coming soon: @item.IsComming <br />
+                            Everyday highlights: @item.IsOutstanding
+                        </td>
+                        <td style="width: fit-content">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit" v-on:click="getItemsById('@item.IDCategoryCard')">Edit</button>
+                            <button type="button" class="btn btn-danger" v-on:click="getItemsByIdDelete('@item.IDCategoryCard')">Remove</button>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add New</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="mb-3">
+                                <label for="NameCategory">Category Name</label>
+                                <input class="form-control" placeholder="Category Name" v-model="NameCategory" />
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="ShortDecription">
+                                    Short description
+                                </label>
+                                <textarea class="form-control" placeholder="Short description" rows="4" v-model="ShortDecription">{{ShortDecription}}</textarea>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileList">Show</label>
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="IsComming" v-model="IsComming">
+                                            <label class="form-check-label" for="IsComming">Coming soon</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="IsOutstanding" v-model="IsOutstanding">
+                                            <label class="form-check-label" for="IsOutstanding">Everyday highlights</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="IsDefault" v-model="IsDefault">
+                                            <label class="form-check-label" for="IsDefault">Default</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addCategory">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="EditLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditLabel">Edit Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="mb-3">
+                                <label for="fileList">Category Name</label>
+                                <input class="form-control" placeholder="Category Name" v-model="NameCategory" />
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="ShortDecription">Short description</label>
+                                <textarea class="form-control" placeholder="Short description" rows="4" v-model="ShortDecription">{{ShortDecription}}</textarea>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileList">Show</label>
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="IsComming" v-model="IsComming">
+                                            <label class="form-check-label" for="IsComming">Coming soon</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="IsOutstanding" v-model="IsOutstanding">
+                                            <label class="form-check-label" for="IsOutstanding">Everyday highlights</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="IsDefault" v-model="IsDefault">
+                                            <label class="form-check-label" for="IsDefault">Default</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editCategory">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#table_category').DataTable({
+            'columnDefs': [{
+                'targets': [-1],
+                'orderable': false,
+            }],
+            searching: true,
+            iDisplayLength: 7,
+            "ordering": false,
+            lengthChange: false,
+            aaSorting: [[0, "desc"]],
+           
+        });
+    });
+</script>
+<script src="~/admin/js/admin_category.js?v=@version"></script>

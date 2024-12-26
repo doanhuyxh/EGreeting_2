@@ -1,0 +1,117 @@
+﻿@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    string version = VersionUpdate.Version();
+
+}
+<div id="vue_card">
+    <h4 class="text-center mb-3">
+        @if (Model.IDCard == 0)
+        {
+            <span>Thêm mới thẻ</span>
+        }
+        else
+        {
+            <span>Sửa thẻ</span>
+        }
+    </h4>
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <label class="form-label">Mô tả ngắn </label>
+                <textarea class="form-control" rows="4" placeholder="Mô tả ngắn" v-model="ShortDecription"></textarea>
+
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="fileList">Tên thẻ</label>
+                <input class="form-control" placeholder="Tên thẻ" v-model="NameCard" value="@Model." />
+
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="mb-3">
+                <label class="form-label">Thuộc danh mục</label>
+                <select v-model="CategoryID" class="form-control">
+                    <option v-for="tp in CategoryData" :key="tp.idCategoryCard" :value="tp.idCategoryCard">
+                        {{ tp.nameCategory }}
+                    </option>
+                </select>
+
+            </div>
+        </div>
+        <div class="col-12 row mt-5">
+
+            <div class="col-5 mt-5">
+                <div class="mb-3">
+                    <label for="formFileSm" class="form-label btn btn-success">Click vào đây chọn ảnh </label>
+                    <input type="file" id="formFileSm" hidden ref="PrPath" v-on:change="onFileChange" accept="image/png, image/jpeg">
+
+                </div>
+                <div class="mb-3">
+                    <div class="form-label"> Ảnh xem trước, click vào ảnh để lấy tọa độ <span class="text-danger" v-html="coordinates"></span></div>
+                    <img :src="previewImage" alt="" style="width:50%" v-on:click="GetPoint($event)" />
+                </div>
+
+            </div>
+
+            <div class="col-7">
+                <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Các trường thông tin cần điền vào thiệp</h5>
+                    <button class="btn btn-success d-flex align-items-center" v-on:click="AddFile">
+                        <i class="fa-solid fa-plus me-2"></i> Thêm
+                    </button>
+                </div>
+
+                <div class="row gy-3" v-for="(item, index) in TypeJsonCard" :key="index">
+                    
+                    <div class="col-lg-3 col-md-4">
+                        <label class="form-label">Tên trường</label>
+                        <input class="form-control" placeholder="Họ tên, lời chúc, ...." v-model="item.name" />
+                    </div>
+
+                    
+                    <div class="col-lg-3 col-md-4">
+                        <label class="form-label">Font Chữ</label>
+                        <select class="form-control" v-model="item.font_family">
+                            <option disabled value="">Chọn font</option>
+                            <option v-for="item in fontList" :key="item.font" :value="item.font_path">{{ item.font }}</option>
+                        </select>
+                    </div>
+
+                    
+                    <div class="col-lg-2 col-md-3">
+                        <label class="form-label">Tọa độ</label>
+                        <input class="form-control" placeholder="x,y" v-model="item.point" />
+                    </div>
+
+                    
+                    <div class="col-lg-2 col-md-2">
+                        <label class="form-label">Font Size</label>
+                        <input class="form-control" type="number" v-model="item.size" />
+                    </div>
+
+                    
+                    <div class="col-lg-1 col-md-2">
+                        <label class="form-label text-nowrap">Màu chữ</label>
+                        <input class="form-control" type="color" v-model="item.color" />
+                    </div>
+
+            
+                    <div class="col-lg-1 col-md-1 d-flex align-items-end">
+                        <button class="btn btn-danger" v-on:click="RemoveFile(index)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary float-right" v-on:click="AddCard">Lưu</button>
+
+</div>
+
+<script src="~/admin/js/admin_card.js?v=@version"></script>

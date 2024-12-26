@@ -1,0 +1,124 @@
+/*================
+ Template Name: AppBeats App Landing Page Template
+ Description: AppBeats is app and product landing page template.
+ Version: 1.0
+ Author: https://themeforest.net/user/themetags
+=======================*/
+
+/*TABLE OF CONTENTS*/
+/*=====================
+01. RESET CSS
+02. BASE TYPOGRAPHY
+03. PRE DEFINE CLASS CSS
+04. HEADER CSS
+05. HERO SECTION CSS
+06. PROMO SECTION CSS
+07. FEATURE SECTION CSS
+08. HOW IT WORK
+09. TESTIMONIAL CSS
+10. PRICING CSS
+11. FAQ CSS
+12. FOOTER CSS
+13. BACK TO TOP CSS
+14. PRELOADER CSS
+15. BLOG SECTION CSS
+16. TEAM SECTION CSS
+17. PARTNER SECTION CSS
+=======================*/
+
+
+/* -----------------------------------------
+			   01. RESET CSS
+-------------------------------------------- */
+
+
+/*=========================================
+           12. FOOTER CSS
+============================================*/
+.footer-top{
+    padding: 65px 0;
+}
+@media (min-width: 320px) and (max-width: 567px){
+    .footer-top{
+        padding: 50px 0;
+    }
+}
+.footer-nav-wrap ul li strong {
+    font-size: 18px;
+    line-height: 19px;
+    font-weight: bold;
+}
+
+.footer-nav-wrap ul li a {
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    color: inherit;
+    opacity: 0.9;
+}
+
+.footer-nav-wrap ul li a:hover, .copyright-text a:hover, .social-list li a:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+.copyright-text {
+    font-size: 13px;
+}
+.social-list li span {
+    padding: 10px;
+}
+.footer-nav-list li a span{
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+.shadow-strong {
+    -webkit-box-shadow: 0 1px 2px 0 rgb(60 64 67 / 15%), 0 2px 6px 2px rgb(60 64 67 / 15%) !important;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 15%), 0 2px 6px 2px rgb(60 64 67 / 15%) !important;
+}
+.card-bottom-line {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+}
+.card-img, .card-img-top {
+    border-top-left-radius: var(--bs-card-inner-border-radius);
+    border-top-right-radius: var(--bs-card-inner-border-radius);
+}
+.sectionTemplates a.card-img-top::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: rgb(0 0 0 / 20%);
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+.rounded-0 {
+    border-radius: 0 !important;
+}
+.ellipsis-line.ellipsis-line-2 {
+    -webkit-line-clamp: 2;
+}
+.ellipsis-line {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.text-muted {
+    --bs-text-opacity: 1;
+    color: #6c757d !important;
+}

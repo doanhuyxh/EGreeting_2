@@ -1,0 +1,94 @@
+﻿@model List<EGreeting.Models.Packages>
+@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    ViewData["Title"] = "Gói";
+    string version = VersionUpdate.Version();
+    List<EGreeting.Models.OrdersPackage> listOrder = null;
+    EGreeting.Models.OrdersPackage isPurchased = null;
+    if (ViewBag.DataOrder != null)
+    {
+        listOrder = ViewBag.DataOrder;
+    }
+  
+}
+@section Styles {
+    <link href="~/css/package.css?v=@version" rel="stylesheet" />
+}
+
+<section id="main_visual" class="main_visual">
+    <div style="position: relative;z-index:-2;height: 550px;background:url(../../assets/img/banner_wedding_templates.jpeg);background-repeat: no-repeat;background-position: center;background-size: cover;"></div>
+    <div class="main_visual_ctn" style="top: 45%;">
+        <div class="main_visual_ctn--top fs-2 p-3 lh-sm px-4 rounded-4 mb-2">
+            E-Greenting
+        </div>
+        <h1 class="main_visual_ctn--title mb-0">Online electronic card interface warehouse</h1>
+        <p class="main_visual_ctn--sub_ttl mb-0">
+            Get yourself a card and go professional for your big day.
+        </p>
+    </div>
+
+</section>
+<section id="pricing" class="price mt-4 mb-4">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="section_title center">
+					<div class="section_title--top">
+                        Easy to operate all
+					</div>
+					<h2 class="section_title--mid">
+                        Features of EGreenting
+					</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+            <div class="pricing-grid">
+                @foreach (var item in Model)
+                {
+                    if (listOrder != null)
+                    {
+                        isPurchased = listOrder.FirstOrDefault(x => x.PackageID == item.IDPackage);
+
+                    }
+                    <div class="pricing-box">
+                        <div class="pricing-title">
+                            Email sending package - @item.Duration
+                        </div>
+                        <div class="pricing-subtitle"><i class="fa-regular fa-envelope"></i> +10</div>
+                        <div class="price">
+                            @item.Price.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))
+                            <span class="vat">+VAT</span>
+                        </div>
+                        <ul class="price-details">
+                            <li>
+                                Email +10 users
+                            </li>
+                        </ul>
+                        @if (ViewBag.UserName != null)
+                        {
+                            @if (listOrder != null && isPurchased != null)
+                            {
+                                <span class="btn btn-secondary">Purchased (Expired: @isPurchased.EndDate.ToString("dd/MM/yyyy"))</span>
+                            }
+                            else
+                            {
+                                <a href="/nap-tien/@item.IDPackage/@item.Price" class="buy-button">Buy Now ></a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="/dang-nhap" class="buy-button">Buy Now ></a>
+
+                        }
+
+
+                    </div>
+                }
+
+            </div>
+		</div>
+	</div>
+</section>
+

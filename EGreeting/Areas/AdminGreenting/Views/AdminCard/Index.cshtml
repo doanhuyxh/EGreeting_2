@@ -1,0 +1,80 @@
+﻿@model List<EGreeting.Models.Cards>
+@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    string version = VersionUpdate.Version();
+
+    var count = 1;
+}
+
+<div id="vue_card">
+    <h3>Danh sách thẻ</h3>
+    <a href="/admin/form-card" class="btn btn-success p-2">
+        Thêm mới
+    </a>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="table_card">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Tên thẻ 
+                    </th>
+                    <th>
+                        Danh mục thẻ
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @(count++)
+                        </td>
+                        <td>
+                              @item.NameCard 
+                        </td>
+                        <td>
+                            @item.Categories?.NameCategory
+                        </td>
+                         <td style="width: fit-content">
+                            <a class="btn btn-primary" href="/admin/form-card/?id=@item.IDCard">Sửa</a>
+                            <button type="button" class="btn btn-danger remove-button" data-delete="@item.IDCard">Xóa</button>
+                        </td> 
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+ 
+</div>
+<script src="~/lib/config/data_table_config_novue.js"></script>
+<script>
+    $(document).ready(function () {
+        const globalSettings = globalConfig.createDataTableConfig();
+        $('#table_card').DataTable({
+            ...globalSettings,
+            'columnDefs': [{
+                'targets': [-1],
+                'orderable': false,
+            }],
+            searching: true,
+            iDisplayLength: 7,
+            "ordering": false,
+            lengthChange: false,
+            aaSorting: [[0, "desc"]],
+            aLengthMenu: [
+                [5, 10, 25, 50, 100, -1],
+
+                ["5 dòng", "10 dòng", "25 dòng", "50 dòng", "100 dòng", "Tất cả"],
+            ]
+        });
+    });
+    </script>

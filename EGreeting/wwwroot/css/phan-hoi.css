@@ -1,0 +1,45 @@
+﻿.feedback input[type="text"],
+.feedback input[type="email"],
+.feedback input[type="tel"],
+.feedback textarea {
+    border: none;
+    border-bottom: 2px solid rgb(128, 126, 126);
+    background: transparent;
+    outline: none;
+    width: 100%;
+    text-transform: capitalize;
+    padding: 1rem 0.4rem;
+}
+
+.feedback .aside {
+    background-color: var(--col_pri);
+    animation: animateClr 5s infinite cubic-bezier(0.62, 0.28, 0.23, 0.99);
+}
+
+@keyframes animateClr {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.feedback ion-icon:not([name="logo-codepen"]) {
+    border: 1px solid currentColor;
+    border-radius: 20%;
+    padding: 1rem;
+}
+.feedback small{
+    color: #fff;
+}
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: var(--col_pri);
+    border-color: var(--col_pri);
+}

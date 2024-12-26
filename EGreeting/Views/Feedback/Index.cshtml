@@ -1,0 +1,190 @@
+﻿@{
+    ViewData["Title"] = "Phản hồi";
+}
+@section Styles{
+    <link href="~/css/phan-hoi.css" rel="stylesheet" />
+}
+<section id="main_visual" class="main_visual">
+    <div style="position: relative;z-index:-2;height: 550px;background:url(../../assets/img/banner_wedding_templates.jpeg);background-repeat: no-repeat;background-position: center;background-size: cover;"></div>
+    <div class="main_visual_ctn" style="top: 45%;">
+        <div class="main_visual_ctn--top fs-2 p-3 lh-sm px-4 rounded-4 mb-2">
+            E-Greenting
+        </div>
+        <h1 class="main_visual_ctn--title mb-0">Online electronic card interface warehouse</h1>
+        <p class="main_visual_ctn--sub_ttl mb-0">
+            Get yourself a card and go professional for your big day.
+        </p>
+    </div>
+
+</section>
+<div class="container feedback">
+    <div class="bg-light">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 p-5 bg-white rounded-3">
+                <div class="d-flex mb-3 flex-column">
+                    <h1 class="h5 text-capitalize my-4">
+                        Feedback to us!
+                    </h1>
+                    
+                </div>
+                <form class="row mb-3" id="feedback-form">
+                    <div class="col-md-12 p-3">
+                        <input required placeholder="Your name" type="text" id="name-user" />
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <input required placeholder="E-mail" type="email" id="email-user" />
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <input required placeholder="phone" type="tel" name="phone-user" id="phone-user" />
+                    </div>
+                    <div class="col-md-12">
+                        <textarea required placeholder="Response content.." id="content-user" cols="30" rows="4"></textarea>
+                    </div>
+                    <div class="text-end mt-4">
+                        <input class="btn px-4 py-3 btn-outline-dark" type="submit" value="Send" />
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-4 col-md-12 text-white aside px-4 py-5">
+                <div class="mb-5">
+                    <h1 class="h3">
+                        Contact information</h1>
+                    <p class="opacity-50">
+                        <small>
+                            We will get back to you within 24 hours
+                        </small>
+                    </p>
+                </div>
+                <div class="d-flex flex-column px-0">
+                    <ul class="m-0 p-0">
+                        <li class="d-flex justify-content-start align-items-center mb-4">
+                            <span class="opacity-50 d-flex align-items-center me-3 fs-2">
+                                <ion-icon name="call"></ion-icon>
+                            </span>
+                            <span>012 3456 789</span>
+                        </li>
+                        <li class="d-flex align-items-center r mb-4">
+                            <span class="opacity-50 d-flex align-items-center me-3 fs-2">
+                                <ion-icon name="mail"></ion-icon>
+                            </span>
+                            <span>contact@contact.com</span>
+                        </li>
+                        <li class="d-flex justify-content-start align-items-center mb-4">
+                            <span class="opacity-50 d-flex align-items-center me-3 fs-2">
+                                <ion-icon name="pin"></ion-icon>
+                            </span>
+                            <span>
+                               ABC - ABC -ABC <br />
+                               ABC
+                            </span>
+                        </li>
+                    </ul>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#feedback-form').on('submit', function (e) {
+                e.preventDefault();
+                var nameUser = $('#name-user').val();
+                var emailUser = $('#email-user').val();
+                var phoneNumber = $('#phone-user').val();
+                var contentFeedback = $('#content-user').val();
+                 var emailPattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                if (!emailPattern.test(emailUser)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "Please enter a valid email.",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            return;
+
+                        }
+                    });
+                    return;
+                }
+                if (!/^\d{10}$/.test(phoneNumber)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "Phone number must have 10 digits.",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            return;
+
+                        }
+                    });
+                    return;
+                }
+                if (!nameUser || !contentFeedback) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "Please fill out all fields completely.",
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            return;
+
+                        }
+                    });
+                    return;
+                }
+                $('#loadingMore').fadeIn();
+
+                var formData = new FormData();
+                formData.append("NameUser", $('#name-user').val());
+                formData.append("EmailUser", $('#email-user').val());
+                formData.append("PhoneNumber", $('#phone-user').val());
+                formData.append("ContentFeedback", $('#content-user').val());
+
+                axios.post('/phan-hoi/post', formData)
+                    .then(function (response) {
+                        if (response.data.code == 200) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: `${response.data.message}`,
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    return;
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: `${response.data.message}`,
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    return;
+
+                                }
+                            });
+                        }
+                    })
+                    .catch(function (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred, please try again',
+                            confirmButtonText: 'OK'
+                        });
+                    }).finally(() => {
+                        $('#loadingMore').fadeOut();
+                    });
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,77 @@
+﻿@model List<EGreeting.Models.Cards>
+
+@{
+    ViewData["Title"] = "Danh mục";
+    CategoriesCard category = ViewBag.category;
+}
+<section id="main_visual" class="main_visual">
+    <div style="position: relative;z-index:-2;height: 550px;background:url(../../assets/img/banner_wedding_templates.jpeg);background-repeat: no-repeat;background-position: center;background-size: cover;"></div>
+    <div class="main_visual_ctn" style="top: 45%;">
+        <div class="main_visual_ctn--top fs-2 p-3 lh-sm px-4 rounded-4 mb-2">
+            E-Greenting
+        </div>
+        <h1 class="main_visual_ctn--title mb-0">Online electronic card interface warehouse</h1>
+        <p class="main_visual_ctn--sub_ttl mb-0">
+            Get yourself a card and go professional for your big day.
+        </p>
+    </div>
+   
+</section>
+<div class="pd-4">
+    <div class="breadcrumb-container">
+        <div class="container">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@category.NameCategory</li>
+                </ol>
+            </nav>
+        </div>
+
+    </div>
+</div>
+@if (Model.Any())
+{
+    <div class="mt-4 mb-4">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 col-md-4 col-lg-4 d-flex mb-5 template-item" >
+                        <div class="card card-bottom-line d-flex mb-6 mb-lg-0 shadow-strong lift lift-lg overflow-hidden border-0 rounded-4">
+                        <a style="line-height:0;" class="card-img-top js-preview-website position-relative"
+                               href="/@item.Slug">
+                                <img src="@item.ImageCardPreview"
+                                     data-src="@item.ImageCardPreview"
+                                     alt="@item.NameCard"
+                            class="card-img-top rounded-0 w-100 h-auto lazyload">
+                        </a>
+                        <a class="card-body p-4 js-preview-website position-relative"
+                        href="/iwedding/template-preview/6174ef83a62963738e0a367c">
+                            <p class="d-flex align-items-center fs-4 mb-2 fw-bold">
+                                    @item.NameCard
+                            </p>
+                            <p class="mb-0 text-muted ellipsis-line ellipsis-line-2">
+                                    @item.ShortDecription
+                            </p>
+                        </a>
+                        <div class="card-meta p-4 py-0 mt-0">
+                            <div class="w-100">
+                                <div class="row gx-2">
+
+                                    <div class="col col-6 col-xl-6 mb-4">
+                                        <a href="/@item.Slug"
+                                        class="fw-bold btn btn-danger w-100 px-2 btn-create-template">Create Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+    

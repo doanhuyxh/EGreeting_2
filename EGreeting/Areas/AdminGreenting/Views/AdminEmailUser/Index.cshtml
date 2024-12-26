@@ -1,0 +1,144 @@
+﻿@model List<EGreeting.Models.EmailOrders>
+
+@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    string version = VersionUpdate.Version();
+
+    var count = 1;
+}
+
+<div id="vue_email">
+    <h3>
+        Email mailing list
+    </h3>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="table_category">
+            <thead>
+                <tr>
+                    <th>
+                        Number
+                    </th>
+                    <th>
+                       User Name
+                    </th>
+                    <th>
+
+                        Card type
+                    </th>
+                    <th>
+                        Message content
+                    </th>
+                    <th>
+
+                        Number of emails sent
+                    </th>
+                    <th>
+
+                        Date sent
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-success" href="javascript:void(0)" v-on:click="GetDetails('@item.IDEmailOrder')">
+                                @(count++)
+
+                            </a>
+                        </td>
+                        <td>
+                            @item.User.UserName
+                        </td>
+                        <td>
+                            @item.Card.NameCard
+                        </td>
+                        <td>
+                            @item.EmailSubject
+                        </td>
+                        <td>
+                            @item.EmailLists.Count() email
+                        </td>
+                        <td>
+                            @item.CreateDate.ToString("dd/MM/yyyy")                       
+                            </td>
+                        
+                        <td style="width: fit-content">
+                            <button type="button" class="btn btn-danger" v-on:click="getItemsByIdDelete('@item.IDEmailOrder')">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="emailListModal" tabindex="-1" aria-labelledby="emailListModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailListModalLabel">List Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Number
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,index) in DataList" :key="index">
+                                    <td>
+                                        {{index+1}}
+                                    </td>
+                                    <td>
+                                        {{item.emailSender}}
+                                    </td>
+                                    <td>
+                                        <span v-if="item.status" class="text-success">Sent</span>
+                                        <span v-else class="text-warning">Not sent yet</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#table_category').DataTable({
+            'columnDefs': [{
+                'targets': [-1],
+                'orderable': false,
+            }],
+            searching: true,
+            iDisplayLength: 7,
+            "ordering": false,
+            lengthChange: false,
+            aaSorting: [[0, "desc"]],
+           
+        });
+    });
+</script>
+<script src="~/admin/js/admin_email.js?v=@version"></script>

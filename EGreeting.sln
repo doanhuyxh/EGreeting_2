@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EGreeting", "EGreeting\EGreeting.csproj", "{1DC443D1-3CA4-4405-9243-1FBE15EA7B7A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextOverlay", "TextOverlay\TextOverlay.csproj", "{0D0E421B-8E6B-48E2-A48F-8D9ADCB5F1C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DC443D1-3CA4-4405-9243-1FBE15EA7B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DC443D1-3CA4-4405-9243-1FBE15EA7B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DC443D1-3CA4-4405-9243-1FBE15EA7B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DC443D1-3CA4-4405-9243-1FBE15EA7B7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D0E421B-8E6B-48E2-A48F-8D9ADCB5F1C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D0E421B-8E6B-48E2-A48F-8D9ADCB5F1C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D0E421B-8E6B-48E2-A48F-8D9ADCB5F1C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D0E421B-8E6B-48E2-A48F-8D9ADCB5F1C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE7FD18F-08DF-4E6B-852F-E4EF84CDEDB9}
+	EndGlobalSection
+EndGlobal

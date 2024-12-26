@@ -1,0 +1,342 @@
+﻿@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    string version = VersionUpdate.Version();
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập</title>
+    <link rel="icon" href="~/clients/img/logo-png.png" type="image/x-icon" />
+
+    <meta name="keywords" content="Thiệp mừng online">
+    <meta name="description" content="Thiệp mừng online">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thiep.devtest.io.vn">
+    <meta property="og:title" content="Thiệp mừng online">
+    <meta property="og:description" content="Thiệp mừng online">
+    <meta property="og:image" content="https://thiep.devtest.io.vn/assets/img/logo.png">
+    <meta name="author" content="Thiệp mừng online">
+
+    <meta property="og:image" content="https://thiep.devtest.io.vn/assets/img/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/solid.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/regular.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css" />
+
+    <link href="~/css/login.css?v=@version" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css?v=@version" asp-append-version="true" />
+
+</head>
+<body>
+    <style>
+        .text-danger {
+            color: red;
+        }
+    </style>
+    <div class="loading-main" id="loadingMore">
+        <div class="loading-background"></div>
+        <div class="u-loading">
+            <div class="u-loading__symbol">
+                <img src="~/assets/img/logo.png" />
+            </div>
+        </div>
+    </div>
+    <div class="container-main" id="vue_login">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <form class="sign-in-form">
+                    <h2 class="title">Đăng nhập</h2>
+                    <span class="text-danger" v-if="mess != null">{{mess}}</span>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="email" placeholder="Nhập email đăng nhập" id="loginFormUserName" v-model="userName" />
+                    </div>
+                    <div class="input-field pass-main">
+                        <i class="fas fa-lock"></i>
+                        <input :type="mainType" placeholder="Mật khẩu" id="loginFormPassword" v-model="password" />
+                        <div class="icon-pass">
+
+                            <svg v-if="showMainPassword" v-on:click="togglePassword" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye ">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
+                            </svg>
+                            <svg v-else v-on:click="togglePassword" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye-slash">
+                                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"></path>
+                                <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"></path>
+                                <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <input type="button" value="Đăng nhập" class="btn solid" v-on:click="postLogin" />
+
+                </form>
+                <form class="sign-up-form">
+                    <h2 class="title">Đăng ký</h2>
+                    <span class="text-danger" v-if="mess != null">{{mess}}</span>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Tên của bạn" v-model="FullName" v-on:input="validateEmpty('FullName')" />
+                    </div>
+                    <span class="text-danger" v-if="errors.FullName">{{ errors.FullName }}</span>
+                    <div class="input-field">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="new-username" placeholder="Nhập tên đăng nhập của bạn" autocomplete="new-username" v-model="userNameRes" v-on:input="validateEmpty('userNameRes')" />
+                    </div>
+                    <span class="text-danger" v-if="errors.userNameRes">{{ errors.userNameRes }}</span>
+
+
+                    <div class="input-field pass-main">
+                        <i class="fas fa-lock"></i>
+                        <input :type="inputType" id="new-password" placeholder="Mật khẩu" autocomplete="new-password" v-model="passwordRegister" v-on:input="validateEmpty('passwordRegister')" />
+                        <div class="icon-pass">
+                            <svg v-if="showPassword" v-on:click="togglePasswordVisibility" id="show" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye ">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
+                            </svg>
+                            <svg v-else v-on:click="togglePasswordVisibility" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye-slash">
+                                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"></path>
+                                <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"></path>
+                                <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="text-danger" v-if="errors.passwordRegister">{{ errors.passwordRegister }}</span>
+
+                    <div class="input-field pass-main">
+                        <i class="fas fa-lock"></i>
+                        <input :type="reType" placeholder="Nhập lại mật khẩu" v-model="ConfirmPassword" v-on:input="validateEmpty('ConfirmPassword')" />
+                        <div class="icon-pass">
+
+                            <svg id="show-main" v-if="showRePassword" v-on:click="togglePasswordRe" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye ">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
+                            </svg>
+                            <svg v-else id="hide-main" v-on:click="togglePasswordRe" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="bi bi-eye-slash">
+                                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"></path>
+                                <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"></path>
+                                <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"></path>
+                            </svg>
+                        </div>
+
+                    </div>
+                    <span class="text-danger" v-if="errors.ConfirmPassword">{{ errors.ConfirmPassword }}</span>
+
+                    <input type="button" class="btn" value="Đăng ký" v-on:click="postRes" />
+
+                </form>
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>Bạn chưa có tài khoản?</h3>
+                    <button class="btn transparent" id="sign-up-btn">
+                        Đăng ký
+                    </button>
+                </div>
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>Bạn đã có tài khoản ?</h3>
+
+                    <button class="btn transparent" id="sign-in-btn">
+                        Đăng nhập
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js?v=@version"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+    <script>
+        var vue_login = new Vue({
+            el: "#vue_login",
+            data: {
+                userName: '',
+                userNameRes: '',
+                FullName: '',
+                PhoneNumber: '',
+                password: '',
+                passwordRegister: '',
+                EmailRes: '',
+                ConfirmPassword: '',
+                mess: null,
+                PriceUser: 0,
+                userCheck: false,
+                RememberMe: true,
+                showPassword: false,
+                showRePassword: false,
+                showMainPassword: false,
+                Email: "",
+                errors: {}
+
+            },
+            computed: {
+                inputType() {
+                    return this.showPassword ? 'text' : 'password';
+                },
+                reType() {
+                    return this.showRePassword ? 'text' : 'password';
+                },
+                mainType() {
+                    return this.showMainPassword ? 'text' : 'password';
+                }
+            },
+            methods: {
+                togglePasswordVisibility() {
+                    this.showPassword = !this.showPassword;
+                },
+                togglePasswordRe() {
+                    this.showRePassword = !this.showRePassword;
+                },
+                togglePassword() {
+                    this.showMainPassword = !this.showMainPassword;
+                },
+                validateEmpty(field) {
+                    if (!this[field].trim()) {
+                        this.errors[field] = 'Vui lòng điền vào trường này.';
+                    } else {
+                        this.errors[field] = '';
+                    }
+                },
+                validatePhoneNumber() {
+                    if (!this.PhoneNumber.startsWith('0') || this.PhoneNumber.length !== 10) {
+                        this.errors.PhoneNumber = 'Số điện thoại không hợp lệ.';
+                    } else {
+                        this.errors.PhoneNumber = '';
+                    }
+                },
+                validateUserName() {
+                    if (/\s/.test(this.userNameRes)) {
+                        this.errors.userNameRes = 'Tên đăng nhập không được chứa khoảng trắng.';
+                    } else {
+                        this.errors.userNameRes = '';
+                    }
+                },
+                convertToSlug(text) {
+                    return text
+                        .toLowerCase()
+                        .normalize("NFD")
+                        .replace(/[\u0300-\u036f]/g, "")
+                        .replace(/\s+/g, "-")
+                        .replace(/[^\w-]+/g, "");
+                },
+                async postLogin() {
+                    $('#loadingMore').fadeIn();
+                    for (let field in this.errors) {
+                        if (this.errors[field]) {
+
+                            return;
+                        }
+                    }
+                    const formData = new FormData();
+
+                    formData.append('UserName', this.userName);
+                    formData.append('Password', this.password);
+                    formData.append('RememberMe', this.RememberMe);
+                    await axios.post('/tai-khoan/dang-nhap', formData)
+                        .then(res => {
+                            if (res.data.code == 200) {
+                                const hef = res.data.refDomain;
+                                if (hef) {
+                                    window.location.href = hef;
+                                } else {
+                                    window.location.reload();
+
+                                }
+                            }
+                            else if (res.data.code == 208) {
+                                const hef = res.data.red;
+                                window.location.href = hef;
+                            }
+                            else if (res.data.code == 408) {
+                                this.mess = res.data.message;
+                                console.log(this.mess);
+
+                            } else {
+                                this.mess = res.data.message;
+                                console.log(this.mess);
+
+                            }
+                        }).finally(() => {
+                            $('#loadingMore').fadeOut();
+                        });
+                },
+                async postRes() {
+                    for (let field in this.errors) {
+                        if (this.errors[field]) {
+
+                            return;
+                        }
+                    }
+                    $('#loadingMore').fadeIn();
+
+                    const formData = new FormData();
+                    formData.append('PasswordHash', this.passwordRegister);
+                    formData.append('ConfirmPassword', this.ConfirmPassword);
+                    formData.append('FullName', this.FullName);
+                    formData.append('UserName', this.userNameRes);
+                    await axios.post('/tai-khoan/dang-ky-tai-khoan', formData)
+                        .then(res => {
+                            if (res.data.code == 200) {
+                                const hef = res.data.refDomain;
+                                if (hef) {
+                                    window.location.href = hef;
+                                } else {
+                                    window.location.reload();
+
+                                }
+
+                            }
+                            else {
+                                this.mess = res.data.message;
+                            }
+                        }).finally(() => {
+                            $('#loadingMore').fadeOut();
+                        });
+                },
+                Logout() {
+                    fetch("/dang-xuat", {
+                        method: "GET"
+                    })
+                        .then(res => {
+
+                            window.location.reload()
+                        })
+                }
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sign_in_btn = document.querySelector("#sign-in-btn");
+            const sign_up_btn = document.querySelector("#sign-up-btn");
+            const container = document.querySelector(".container-main");
+
+            sign_up_btn.addEventListener("click", () => {
+                container.classList.add("sign-up-mode");
+                vue_login.$data.mess = null;
+            });
+
+            sign_in_btn.addEventListener("click", () => {
+                container.classList.remove("sign-up-mode");
+                vue_login.$data.mess = null;
+
+            });
+        });
+    </script>
+</body>
+<
+</html>
+

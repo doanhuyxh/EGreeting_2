@@ -1,0 +1,107 @@
+﻿@model List<EGreeting.Models.CategoriesCard>
+<header id="header" class="sticky" style="padding-right: 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header-wrap">
+                    <div id="logo" class="logo">
+                        <a href="/iwedding">
+                            <img class="logo-color" width="147" height="53" src="~/assets/img/logo.png"
+                                 alt="EGREENTING">
+                        </a>
+                    </div>
+                    <div class="nav-wrap">
+                        <nav id="mainnav" class="mainnav  align-items-center" role="navigation">
+                            <ul id="menu-primary-menu" class="menu">
+                                <li class="menu-item">
+                                    <a href="/">Home</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="page-scroll  toggle-mega-menu"
+                                       href="javascript:void(0)">Cateogries <i class="fa fa-chevron-down"></i></a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="page-scroll" href="/phan-hoi">Feedback</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="page-scroll" href="/goi">Service </a>
+                                </li>
+                                @if (ViewBag.UserName != null && ViewBag.UserName == "greenting")
+                                {
+                                    <li class="menu-item">
+                                        <a class="page-scroll" href="/admin/dashboard">Admin </a>
+                                    </li>
+
+                                }
+
+                            </ul>
+                        </nav>
+                        @if (ViewBag.UserName != null)
+                        {
+                            <div class="btn_login ms-0 ms-lg-3 user-btns position-relative">
+                                <a class="btn_login_button" href="/dang-xuat">Logout</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="btn_login ms-0 ms-lg-3 user-btns position-relative">
+                                <a class="btn_login_button" href="/dang-nhap">Login</a>
+                            </div>
+
+                        }
+
+                      
+                        <div class="btn-menu d-block d-lg-none ms-2">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="mobile-menu d-lg-none" style="display: none;">
+            <nav>
+                <ul class="menu list-unstyled mb-0">
+                    <li class="menu-item"><a href="/">Home</a></li>
+                    <li class="menu-item">
+                        <a class="page-scroll toggle-mega-menu"
+                           href="javascript:void(0)">Categories <i class="fa fa-chevron-down"></i></a>
+                    </li>
+                    <li class="menu-item"><a class="page-scroll" href="/phan-hoi">Feedback</a></li>
+                    <li class="menu-item"><a class="page-scroll" href="/goi">Service</a></li>
+                    @if (ViewBag.UserName != null && ViewBag.UserName == "greenting")
+                    {
+                        <li class="menu-item">
+                            <a class="page-scroll" href="/admin/dashboard">Admin </a>
+                        </li>
+
+                    }
+                </ul>
+            </nav>
+        </div>
+        <div id="mega-menu" class="mega-menu" style="display: none;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mega-menu-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Categories</h4>
+                                    <ul>
+                                        @foreach (var item in Model)
+                                        {
+                                            <li><a href="/danh-muc/@item.Slug">@item.NameCategory</a></li>
+
+                                        }
+                                       
+                                    </ul>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+

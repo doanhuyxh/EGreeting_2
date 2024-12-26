@@ -1,0 +1,280 @@
+﻿@model EGreeting.DTO.ViewHomeDTO
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="home-main">
+    <div class="container pd-4 ">
+        <div class="row justify-content-around align-items-center mt-5">
+            <div class="col-md-12 mb-2">
+                <div class="section_title center">
+                    <div class="section_title--top">
+
+                        Full of useful features
+                    </div>
+                    <div class="section_title--mid">
+
+                        for a dream service
+                    </div>
+                    <p class="section_title--bot mt-3">
+                        With the necessary tools, helping you manage all your plans
+                        for your big day more intelligently.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="justify-content-around align-items-center mt-5 p-4 rounded-5 new-single-promo border-0 shadow-sm"
+                     style="background: rgb(255 255 255 / 60%)!important;">
+                    <div class="row">
+                        <div class="col-md-5 col-lg-5">
+                            <div class="z-index text-center">
+                                <img class="lazyload w-100 h-auto"
+                                     src="https://biihappy.com/static/theme/img/iwedding/invitation.webp?v=1"
+                                     data-src="https://biihappy.com/static/theme/img/iwedding/invitation.webp?v=1"
+                                     alt="Thiệp cưới Online"
+                                     title="Thiệp cưới Online | Website đám cưới &amp; Thiệp cưới online">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-7">
+                            <div class="detail-info-wrap">
+                                <h2 class="imageBox_item--title text-center text-sm-start h-auto d-block">
+                                    Create
+                                    cards
+                                    online
+                                </h2>
+                                <p>
+                                    Design <strong>your own unique online</strong> or <strong>e-cards</strong> with
+                                    professional card templates, and invite your friends to marry in an impressive
+                                    way
+                                </p>
+
+                                <div class="row mt-5">
+                                    <div class="col-sm-6 col-lg-4 col-12">
+                                        <div class="detail-info-box text-center text-sm-start">
+                                            <i class="fa fa-palette d-inline-block mb-4 icon-sm text-white p-3 secondary-bg rounded-circle"
+                                               style="background: #DF3367!important;"></i>
+                                            <div class="detail-info-content">
+                                                <div class="mb-2 h5 fw-bold">
+                                                    Choose a card template
+                                                </div>
+                                                <p>
+                                                    Diverse card templates and continuously updated
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4 col-12">
+                                        <div class="detail-info-box text-center text-sm-start">
+                                            <i class="fa fa-envelope d-inline-block mb-4 icon-sm text-white p-3 secondary-bg rounded-circle"
+                                               style="background: #DF3367!important;"></i>
+
+                                            <div class="detail-info-content">
+                                                <div class="mb-2 h5 fw-bold">Send cards online</div>
+                                                <p>
+                                                    Send cards online to each guest
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4 col-12">
+                                        <div class="detail-info-box text-center text-sm-start">
+                                            <i class="fa fa-comment d-inline-block mb-4 icon-sm text-white p-3 secondary-bg rounded-circle"
+                                               style="background: #DF3367!important;"></i>
+
+                                            <div class="detail-info-content">
+                                                <div class="mb-2 h5 fw-bold">
+                                                    Confirm attendance
+                                                </div>
+                                                <p>
+                                                    Receive feedback and confirmation of attendance from guests
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<section id="qa" class="qa" style="background: #fef6f8;margin-top: 120px;padding-top: 100px;padding-bottom: 100px;">
+    <div class="container">
+        <div class="row mt-5 pb-5">
+            <div class="col-md-12">
+                <div class="about_bot">
+                    <p class="fs-5">
+                        Build <strong>your own invitation cards yourself</strong> ?
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="section_title center">
+                    <div class="section_title--top">
+                        There are all types of cards
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    @if (Model.SuKienSapDienRa.Any())
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                                    Sự kiện sắp diễn ra
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        @foreach (var item in Model.SuKienSapDienRa)
+                                        {
+                                        <div class="col-12 col-md-3">
+                                            <a href="/danh-muc/@item.Slug" class="mb-3">@item.NameCategory</a>
+
+                                        </div>
+                                        }
+
+                                    </div>
+
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+                     
+                    }
+                    @if (Model.HangNgay.Any())
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                    Hàng ngày nổi bật
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        @foreach (var item in Model.HangNgay)
+                                        {
+                                            <div class="col-12 col-md-3">
+                                                <a href="/danh-muc/@item.Slug" class="mb-3">@item.NameCategory</a>
+
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    }
+                    @if (Model.ShowMacDinh.Any())
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                        aria-controls="flush-collapseThree">
+                                    Hàng ngày
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        @foreach (var item in Model.ShowMacDinh)
+
+                                        {
+                                            <div class="col-12 col-md-3">
+                                                <a href="/danh-muc/@item.Slug" class="mb-3">@item.NameCategory</a>
+
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    }
+                  
+                   
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<section id="step" class="step pt-120">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5 col-sm-12">
+                <div class="section_title left">
+                    <div class="section_title--mid">
+
+                        04 STEPS to create
+                    </div>
+                    <div class="section_title--top">
+                        Create your style card
+                    </div>
+                </div>
+                <ul class="step_list">
+                    <li class="step_item">
+                        <span class="step_item_number">1</span>
+                        <p>CREATE ACCOUNT &amp; LOG IN TO THE PLATFORM</p>
+                    </li>
+                    <li class="step_item">
+                        <span class="step_item_number">2</span>
+                        <p>
+                            CHOOSE YOUR FAVORITE CARD TEMPLATE
+                        </p>
+                    </li>
+                    <li class="step_item">
+                        <span class="step_item_number">3</span>
+                        <p>CREATE, CUSTOMIZE INFORMATION</p>
+                    </li>
+                    <li class="step_item">
+                        <span class="step_item_number">4</span>
+                        <p>SHARE YOUR CARD WITH EVERYONE VIA EMAIL</p>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-lg-7 col-sm-12">
+                <div class="step_gallery text-center">
+                    <img class="lazyload w-100 h-auto"
+                         src="https://biihappy.com/static/theme/img/iwedding/pic_step.png?time=1"
+                         data-src="https://biihappy.com/static/theme/img/iwedding/pic_step.png?time=1"
+                         alt="iWedding">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

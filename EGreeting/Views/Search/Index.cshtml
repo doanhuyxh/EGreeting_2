@@ -1,0 +1,38 @@
+﻿@model List<EGreeting.Models.Cards>
+
+@{
+    ViewData["Title"] = "Tìm kiếm " + ViewBag.Search;
+
+}
+<div class="breadcrumb-container">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tìm kiếm "@ViewBag.Search"</li>
+            </ol>
+        </nav>
+    </div>
+
+</div>
+@if (Model.Any())
+{
+    <div class="container mt-4">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-md-4 mb-3">
+                    <div class="div-effect effect-box fix-box-img">
+                        <div class="waiting lazyloaded" data-expand="-5">
+                            <a href="/@item.Slug">
+                                <img src="@item.ImageCardPreview" class="img-fluid" />
+                                <div class="title-effect-home">@item.NameCard</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+}

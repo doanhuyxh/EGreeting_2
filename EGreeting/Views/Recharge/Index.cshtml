@@ -1,0 +1,180 @@
+﻿@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    ViewData["Title"] = "Nạp tiền";
+    string version = VersionUpdate.Version();
+
+}
+<div class="container mt-4">
+    <div class="row">
+
+        <div class="col-12 col-md-6" id="step-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <div class="img-bank-qr" id="imgBank" data-id="1">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="img-bank-main">
+                                <img src="~/assets/img/vcb.png" class="img-fluid" />
+                            </div>
+
+                            <div class="content-qr">
+                                <div class="mb-3">
+                                    <p class="title-chuyen mb-0">
+                                        Account owner
+                                    </p>
+                                    <p class="in-dam">Bang Gia Hung</p>
+                                </div>
+                                <div class="mb-3 copy-ele">
+                                    <div>
+                                        <p class="title-chuyen mb-0">Account number</p>
+                                        <p id="accountNumber" data-copy="0341007123657" class="in-dam">0341007123657</p>
+                                    </div>
+                                    <div>
+                                        <span onclick="copyText('accountNumber')" class="copy-style"> Copy</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <p class="title-chuyen mb-0">Amount</p>
+                                    <p class="in-dam" id="so-tien"></p>
+                                </div>
+                                <div class="mb-3 copy-ele">
+                                    <div>
+                                        <p class="title-chuyen mb-0">Content</p>
+                                        <p id="contentToCopy" data-copy="@ViewBag.CodeOrder" class="in-dam">@ViewBag.CodeOrder</p>
+                                    </div>
+                                    <div>
+                                        <span onclick="copyText('contentToCopy')" class="copy-style"> Copy</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-6" id="step-2-1">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        DEPOSIT INSTRUCTIONS!
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="medium-font"><strong>Step  1:</strong> Open the Bank App or Bank Website to perform money transfer.</div>
+                    <div class="medium-font"><strong>Step  2:</strong> Select Bank, enter the exact account number and amount you want to deposit.</div>
+                    <div class="medium-font"><strong>Step  3:</strong>Enter the exact money transfer content as requested</div>
+                    <div class="medium-font"><strong>Step  4:</strong>Make a money transfer.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4 d-flex justify-content-center" id="step-2-2">
+            <button class="btn btn-success confirm-button">Confirm deposit</button>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function formatCurrency(amount) {
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+
+            return formatter.format(amount);
+        }
+        $(document).ready(function () {
+
+            $('#loadingMore').fadeIn();
+
+            const nameBank = "VCB";
+            const stkBank = "0341007123657";
+            const tenNguoiDung = "BANG GIA HUNG";
+            var orderCode = "@ViewBag.CodeOrder";
+            const Price = '@ViewBag.Price'
+            const soTien = formatCurrency(Price);
+            $("#so-tien").text(soTien)
+            $('.img-bank-qr').each(function () {
+                const imgUrl = `https://img.vietqr.io/image/${nameBank}-${stkBank}-print.png?amount=${Price}&addInfo=${orderCode}&accountName=${tenNguoiDung}`;
+
+                $(this).html(`<img src="${imgUrl}" alt="QR Code bank" class="qr-code-img img-fluid" />`);
+            });
+
+            $('#loadingMore').fadeOut();
+
+
+            $('.confirm-button').on('click', function () {
+
+                $('#loadingMore').fadeIn();
+
+                const formData = new FormData();
+                formData.append('OrderCode', orderCode);
+                formData.append('PriceRecharge', "@ViewBag.Price");
+                formData.append('PackageID', "@ViewBag.PackageID");
+                axios.post('/confirm/nap-tien', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function (response) {
+                    $('#loadingMore').fadeOut();
+
+                    if (response.data.code === 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successg',
+                            text: 'Confirmed successfully',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/";
+                            }
+                        });
+                    }
+                }).catch(function (error) {
+                    $('#loadingMore').fadeOut();
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: `An Error has occurred`,
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            return;
+
+                        }
+                    });
+                });
+
+
+            })
+
+
+        });
+        function copyText(elementId) {
+            let element = document.getElementById(elementId);
+            if (element && element.getAttribute('data-copy')) {
+                let textToCopy = element.getAttribute('data-copy');
+
+                let textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'absolute';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+
+                textarea.select();
+                document.execCommand('copy');
+
+                document.body.removeChild(textarea);
+
+                alert("Copied")
+
+            }
+        }
+    </script>
+}

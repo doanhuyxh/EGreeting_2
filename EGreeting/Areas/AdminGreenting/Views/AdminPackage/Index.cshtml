@@ -1,0 +1,165 @@
+﻿@model List<EGreeting.Models.Packages>
+@inject EGreeting.Services.VersionUpdate VersionUpdate
+
+@{
+    string version = VersionUpdate.Version();
+
+    var count = 1;
+}
+<div id="vue_package">
+    <h3>List Package</h3>
+    <button type="button" class="btn btn-success p-2" data-bs-toggle="modal" data-bs-target="#addModal" v-on:click="resetData">
+        Add New
+    </button>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="table_package">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Package Type</th>
+                    <th>Price</th>
+                    <th>Create Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @(count++)
+                        </td>
+                        <td>
+                            @item.Duration
+                        </td>
+                        <td>
+                            @item.Price.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))
+
+                        </td>
+                        <td>
+                            @item.CreateDate.ToString("dd/MM/yyyy")
+
+
+                        </td>
+                        <td style="width: fit-content">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit" v-on:click="getItemsById('@item.IDPackage')">Edit</button>
+                            <button type="button" class="btn btn-danger" v-on:click="getItemsByIdDelete('@item.IDPackage')">Remove</button>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add New </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="mb-3">
+                                <label for="NameCategory">Package Type</label>
+                                <select class="form-control" v-model="Duration">
+                                    <option value="1 day">1 day</option>
+                                    <option value="1 month">1 month</option>
+                                    <option value="1 year">1 year</option>
+                                </select>
+                           
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="ShortDecription">
+                                    Short description
+                                </label>
+                                <textarea class="form-control" placeholder="Short description" rows="4" v-model="Decription"></textarea>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="NameCategory">Price</label>
+                                <input type="number" class="form-control" placeholder="Price" v-model="Price" />
+                                <span class="text-success mt-2">{{formatCurrency(Price)}}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="addPackage">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="EditLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditLabel">Edit Package - {{Duration}} </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="mb-3">
+                                <label for="NameCategory">Package Type</label>
+                                <select class="form-control" v-model="Duration">
+                                    <option value="1 day">1 day</option>
+                                    <option value="1 month">1 month</option>
+                                    <option value="1 year">1 year</option>
+                                </select>
+
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="ShortDecription">Short description</label>
+                                <textarea class="form-control" placeholder="Short description" rows="4" v-model="Decription"></textarea>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="NameCategory">Price</label>
+                                <input type="number" class="form-control" placeholder="Price..." v-model="Price" />
+                                <span class="text-success mt-2">{{formatCurrency(Price)}}</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" v-on:click="editPackage">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#table_package').DataTable({
+            ...globalSettings,
+            'columnDefs': [{
+                'targets': [-1],
+                'orderable': false,
+            }],
+            searching: true,
+            iDisplayLength: 7,
+            "ordering": false,
+            lengthChange: false,
+            aaSorting: [[0, "desc"]],
+            
+        });
+        
+    });
+</script>
+<script src="~/admin/js/admin_package.js?v=@version"></script>
