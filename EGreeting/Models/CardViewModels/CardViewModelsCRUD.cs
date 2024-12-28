@@ -14,6 +14,7 @@
         public DateTime CreateDate { get; set; }
 
         public IFormFile? ImageCardPreviewPath { get; set; }
+        public IFormFile? ImageCardMainPath { get; set; }
 
         public static implicit operator CardViewModelsCRUD(Cards _card)
         {

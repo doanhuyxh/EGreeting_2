@@ -61,6 +61,7 @@
                             <input class="form-control"
                                    data-point="@item.Point"
                                    data-font-famaily="@item.font_family"
+                                   data-max-width="@item.max_width"
                                    data-size="@item.Size"
                                    data-color="@item.Color" />
                         </div>
@@ -228,6 +229,7 @@
                 const font = inputs[i].getAttribute('data-font-famaily');
                 const size = inputs[i].getAttribute('data-size');
                 const color = inputs[i].getAttribute('data-color');
+                const max_width = inputs[i].getAttribute('data-max-width');
 
                 data.push({
                     x: x,
@@ -235,7 +237,8 @@
                     text: value,
                     font: font,
                     font_size: size,
-                    color: color
+                    color: color,
+                    max_width: max_width
                 });
             }
 

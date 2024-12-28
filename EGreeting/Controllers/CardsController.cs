@@ -144,7 +144,8 @@ namespace EGreeting.Controllers
                     Text = item.text,
                     FontPath = _hostingEnvironment.ContentRootPath + "/wwwroot/" + item.font,
                     FontSize = item.font_size,
-                    TextColor = item.color
+                    TextColor = item.color,
+                    MaxWidth = item.max_width
                 });
             }
 

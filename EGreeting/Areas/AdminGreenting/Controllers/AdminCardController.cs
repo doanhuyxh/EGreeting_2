@@ -94,6 +94,11 @@ namespace EGreeting.Areas.AdminGreenting.Controllers
                 {
                     var PrPath = await _iCommon.UploadedFile(model.ImageCardPreviewPath);
                     model.ImageCardPreview = "/Upload/" + PrPath;
+                }               
+
+                if (model.ImageCardPreviewPath != null)
+                {
+                    var PrPath = await _iCommon.UploadedFile(model.ImageCardMainPath);
                     model.ImageCardMain = "/Upload/" + PrPath;
                 }               
 

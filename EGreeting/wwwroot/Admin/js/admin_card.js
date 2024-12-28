@@ -62,10 +62,14 @@
                 });
         },
         onFileChange(event) {
+            this.imageFile = event.target.files[0];            
+            this.ImageCardMain = URL.createObjectURL(this.imageFile);
+        },
+        onFileChange2(event) {
             this.imageFile = event.target.files[0];
             this.previewImage = URL.createObjectURL(this.imageFile);
-            this.uploadedImage = null;
         },
+
         async AddCard() {
             try {
                 $('#preloader').fadeIn();
@@ -76,10 +80,16 @@
                 formData.append('ShortDecription', this.ShortDecription);
                 formData.append('CategoryID', this.CategoryID);
                 formData.append('TypeJsonCard', JSON.stringify(this.TypeJsonCard));
+
                 if (this.$refs.PrPath.files[0] != null) {
 
-                    formData.append('ImageCardPreviewPath', this.$refs.PrPath.files[0]);
+                    formData.append('ImageCardMainPath', this.$refs.PrPath.files[0]);
                 }
+                if (this.$refs.PrPath2.files[0] != null) {
+
+                    formData.append('ImageCardPreviewPath', this.$refs.PrPath2.files[0]);
+                }
+
                 await axios.post('/admin/save-card', formData,
                     {
                         headers: {
@@ -138,7 +148,8 @@
                 "point": "0,0",
                 "color": "#000000",
                 "size": 12,
-                "font_family": ""
+                "font_family": "",
+                max_width: 100
             })
         },
         RemoveFile(index) {

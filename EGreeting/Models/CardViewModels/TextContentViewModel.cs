@@ -7,5 +7,6 @@
         public float Size { get; set; }
         public string font_family { get; set; }
         public string Color { get; set; }
+        public float max_width { get; set; }
     }
 }
